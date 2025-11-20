@@ -38,9 +38,9 @@ export default function MeetingCard({ meeting }: MeetingCardProps) {
     }
   };
 
-  const startDateTime = formatDateTime(meeting.startTime);
-  const endDateTime = formatDateTime(meeting.endTime);
-  const duration = calculateDuration(meeting.startTime, meeting.endTime);
+  const startDateTime = formatDateTime(meeting.start);
+  const endDateTime = formatDateTime(meeting.end);
+  const duration = calculateDuration(meeting.start, meeting.end);
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow duration-200">
@@ -84,7 +84,7 @@ export default function MeetingCard({ meeting }: MeetingCardProps) {
               key={index} 
               className="inline-flex items-center px-3 py-1 bg-gray-50 text-gray-700 rounded-full text-xs border border-gray-200"
             >
-              {attendee}
+              {attendee.displayName}
             </span>
           ))}
           {meeting.attendees.length > 3 && (

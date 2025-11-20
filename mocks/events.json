@@ -1,0 +1,219 @@
+{
+    "upcoming": [
+        {
+            "id": "1",
+            "title": "Product Roadmap Review",
+            "start": "2025-11-21T04:54:00+05:30",
+            "end": "2025-11-21T05:54:00+05:30",
+            "attendees": [
+                {
+                    "displayName": "Sarah Chen",
+                    "email": "sarah@example.com"
+                },
+                {
+                    "displayName": "Michael Ross",
+                    "email": "michael@example.com"
+                },
+                {
+                    "displayName": "Emily Davis",
+                    "email": "emily@example.com"
+                }
+            ],
+            "description": "Quarterly review of product roadmap and feature prioritization for Q1 2025."
+        },
+        {
+            "id": "2",
+            "title": "Engineering Standup",
+            "start": "2025-11-22T02:54:00+05:30",
+            "end": "2025-11-22T03:24:00+05:30",
+            "attendees": [
+                {
+                    "displayName": "Alex Kumar",
+                    "email": "alex@example.com"
+                },
+                {
+                    "displayName": "Lisa Park",
+                    "email": "lisa@example.com"
+                },
+                {
+                    "displayName": "James Wilson",
+                    "email": "james@example.com"
+                },
+                {
+                    "displayName": "Rachel Green",
+                    "email": "rachel@example.com"
+                }
+            ],
+            "description": "Daily standup to sync on sprint progress and blockers."
+        },
+        {
+            "id": "3",
+            "title": "Client Presentation - Katalyst Demo",
+            "start": "2025-11-23T02:54:00+05:30",
+            "end": "2025-11-23T04:24:00+05:30",
+            "attendees": [
+                {
+                    "displayName": "John Smith",
+                    "email": "john@example.com"
+                },
+                {
+                    "displayName": "Anna Lee",
+                    "email": "anna@example.com"
+                },
+                {
+                    "displayName": "David Brown",
+                    "email": "david@example.com"
+                },
+                {
+                    "displayName": "Sophie Turner",
+                    "email": "sophie@example.com"
+                },
+                {
+                    "displayName": "Mark Johnson",
+                    "email": "mark@example.com"
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Design System Workshop",
+            "start": "2025-11-24T02:54:00+05:30",
+            "end": "2025-11-24T04:54:00+05:30",
+            "attendees": [
+                {
+                    "displayName": "Emma Watson",
+                    "email": "emma@example.com"
+                },
+                {
+                    "displayName": "Tom Hardy",
+                    "email": "tom@example.com"
+                }
+            ],
+            "description": "Workshop to align on design system components and tokens."
+        },
+        {
+            "id": "5",
+            "title": "Investor Update Call",
+            "start": "2025-11-26T02:54:00+05:30",
+            "end": "2025-11-26T03:54:00+05:30",
+            "attendees": [
+                {
+                    "displayName": "Robert Williams",
+                    "email": "robert@example.com"
+                },
+                {
+                    "displayName": "Jessica Taylor",
+                    "email": "jessica@example.com"
+                }
+            ],
+            "description": "Monthly update call with Series A investors covering metrics and milestones."
+        }
+    ],
+    "past": [
+        {
+            "id": "6",
+            "title": "Sprint Planning - Week 47",
+            "start": "2025-11-19T02:54:00+05:30",
+            "end": "2025-11-19T04:24:00+05:30",
+            "attendees": [
+                {
+                    "displayName": "Alex Kumar",
+                    "email": "alex@example.com"
+                },
+                {
+                    "displayName": "Lisa Park",
+                    "email": "lisa@example.com"
+                },
+                {
+                    "displayName": "James Wilson",
+                    "email": "james@example.com"
+                },
+                {
+                    "displayName": "Rachel Green",
+                    "email": "rachel@example.com"
+                },
+                {
+                    "displayName": "Chris Evans",
+                    "email": "chris@example.com"
+                }
+            ],
+            "description": "Sprint planning for calendar integration and AI features."
+        },
+        {
+            "id": "7",
+            "title": "User Research Synthesis",
+            "start": "2025-11-18T02:54:00+05:30",
+            "end": "2025-11-18T03:54:00+05:30",
+            "attendees": [
+                {
+                    "displayName": "Emma Watson",
+                    "email": "emma@example.com"
+                },
+                {
+                    "displayName": "Sophie Turner",
+                    "email": "sophie@example.com"
+                },
+                {
+                    "displayName": "Anna Lee",
+                    "email": "anna@example.com"
+                }
+            ],
+            "description": "Review of user interviews and key insights for product improvements."
+        },
+        {
+            "id": "8",
+            "title": "Security Audit Review",
+            "start": "2025-11-16T02:54:00+05:30",
+            "end": "2025-11-16T04:54:00+05:30",
+            "attendees": [
+                {
+                    "displayName": "Michael Ross",
+                    "email": "michael@example.com"
+                },
+                {
+                    "displayName": "David Brown",
+                    "email": "david@example.com"
+                },
+                {
+                    "displayName": "Tom Hardy",
+                    "email": "tom@example.com"
+                }
+            ],
+            "description": "Quarterly security audit findings and action items."
+        },
+        {
+            "id": "9",
+            "title": "All-Hands Company Meeting",
+            "start": "2025-11-14T02:54:00+05:30",
+            "end": "2025-11-14T03:54:00+05:30",
+            "attendees": [
+                {
+                    "displayName": "Everyone",
+                    "email": "team@example.com"
+                }
+            ],
+            "description": "Monthly all-hands covering company updates, wins, and upcoming initiatives."
+        },
+        {
+            "id": "10",
+            "title": "API Architecture Discussion",
+            "start": "2025-11-11T02:54:00+05:30",
+            "end": "2025-11-11T04:24:00+05:30",
+            "attendees": [
+                {
+                    "displayName": "Alex Kumar",
+                    "email": "alex@example.com"
+                },
+                {
+                    "displayName": "James Wilson",
+                    "email": "james@example.com"
+                },
+                {
+                    "displayName": "Mark Johnson",
+                    "email": "mark@example.com"
+                }
+            ],
+            "description": "Technical discussion on MCP integration architecture and OAuth flow."
+        }
+    ]
+}

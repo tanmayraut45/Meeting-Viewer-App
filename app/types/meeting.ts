@@ -1,9 +1,14 @@
+export interface Attendee {
+    displayName: string;
+    email?: string;
+}
+
 export interface Meeting {
     id: string;
     title: string;
-    startTime: string; // ISO 8601 format
-    endTime: string;   // ISO 8601 format
-    attendees: string[];
+    start: string; // ISO 8601 format
+    end: string;   // ISO 8601 format
+    attendees: Attendee[];
     description?: string;
 }
 
