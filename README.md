@@ -9,7 +9,7 @@ A lightweight web application that connects to Google Calendar via Composio's MC
 
 ## 🚀 Live Demo
 
-[View Live Demo →](https://meeting-viewer-app.vercel.app)
+[View Live Demo →](https://calsyncapp.vercel.app)
 
 ---
 
