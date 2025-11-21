@@ -24,10 +24,20 @@ export default function Home() {
       <div className="min-h-screen bg-gray-50">
         <header className="bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <h1 className="text-3xl font-bold text-gray-900">Meeting Viewer</h1>
-            <p className="mt-1 text-sm text-gray-600">
-              View and manage your calendar meetings
-            </p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Meeting Viewer</h1>
+                <p className="mt-1 text-sm text-gray-600">
+                  View and manage your calendar meetings
+                </p>
+              </div>
+              <a
+                href="/api/oauth/start"
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"
+              >
+                Connect Google Calendar
+              </a>
+            </div>
           </div>
         </header>
 
@@ -70,10 +80,20 @@ export default function Home() {
       <div className="min-h-screen bg-gray-50">
         <header className="bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <h1 className="text-3xl font-bold text-gray-900">Meeting Viewer</h1>
-            <p className="mt-1 text-sm text-gray-600">
-              View and manage your calendar meetings
-            </p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Meeting Viewer</h1>
+                <p className="mt-1 text-sm text-gray-600">
+                  View and manage your calendar meetings
+                </p>
+              </div>
+              <a
+                href="/api/oauth/start"
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"
+              >
+                Connect Google Calendar
+              </a>
+            </div>
           </div>
         </header>
 
@@ -109,10 +129,20 @@ export default function Home() {
       {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <h1 className="text-3xl font-bold text-gray-900">Meeting Viewer</h1>
-          <p className="mt-1 text-sm text-gray-600">
-            View and manage your calendar meetings
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Meeting Viewer</h1>
+              <p className="mt-1 text-sm text-gray-600">
+                View and manage your calendar meetings
+              </p>
+            </div>
+            <a
+              href="/api/oauth/start"
+              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"
+            >
+              Connect Google Calendar
+            </a>
+          </div>
         </div>
       </header>
 
