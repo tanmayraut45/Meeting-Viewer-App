@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { supabase, validateSupabaseConfig } from '@/lib/supabase';
 
 export async function GET(req: NextRequest) {
+    // Validate Supabase configuration at runtime
+    validateSupabaseConfig();
+
     // Get session ID from cookie
     const sessionId = req.cookies.get('session_id')?.value;
 

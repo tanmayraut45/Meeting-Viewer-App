@@ -11,10 +11,10 @@ export interface OAuthSession {
     expires_at?: string;
 }
 
-// Initialize Supabase client
-// Using non-null assertion with fallback to avoid build-time errors
-const supabaseUrl = process.env.SUPABASE_URL || '';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY || '';
+// Initialize Supabase client with dummy values for build-time
+// Real values will be used at runtime from environment variables
+const supabaseUrl = process.env.SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY || 'placeholder-key';
 
 export const supabase = createClient(supabaseUrl, supabaseServiceKey, {
     auth: {
@@ -22,3 +22,10 @@ export const supabase = createClient(supabaseUrl, supabaseServiceKey, {
         persistSession: false
     }
 });
+
+// Runtime validation helper
+export function validateSupabaseConfig() {
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) {
+        throw new Error('Missing Supabase environment variables. Please set SUPABASE_URL and SUPABASE_SERVICE_KEY in Vercel.');
+    }
+}

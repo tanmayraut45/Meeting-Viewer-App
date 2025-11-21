@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
 import { serialize } from 'cookie';
-import { supabase } from '@/lib/supabase';
+import { supabase, validateSupabaseConfig } from '@/lib/supabase';
 
 export async function GET() {
     try {
+        // Validate Supabase configuration at runtime
+        validateSupabaseConfig();
+
         const authConfigId = process.env.COMPOSIO_AUTH_CONFIG_ID;
         const apiKey = process.env.COMPOSIO_API_KEY;
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
