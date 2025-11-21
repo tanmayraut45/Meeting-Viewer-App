@@ -83,9 +83,15 @@ export async function GET(req: NextRequest) {
         });
 
         if (!upcomingResp.ok || !pastResp.ok) {
-            console.error('Composio proxy error');
+            const upcomingError = !upcomingResp.ok ? await upcomingResp.text() : 'OK';
+            const pastError = !pastResp.ok ? await pastResp.text() : 'OK';
+            console.error('❌ Composio proxy error details:');
+            console.error(`Upcoming Status: ${upcomingResp.status}, Error: ${upcomingError}`);
+            console.error(`Past Status: ${pastResp.status}, Error: ${pastError}`);
+            console.error(`API Key present: ${!!process.env.COMPOSIO_API_KEY}`);
+
             return NextResponse.json(
-                { error: 'Failed to fetch calendar events' },
+                { error: `Failed to fetch events. Upcoming: ${upcomingResp.status}, Past: ${pastResp.status}` },
                 { status: 500 }
             );
         }
