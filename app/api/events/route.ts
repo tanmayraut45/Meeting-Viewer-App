@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-// Access the same in-memory connection storage
-const connectionsMap = (global as any).__connectionsMap || new Map();
-(global as any).__connectionsMap = connectionsMap;
+import { supabase } from '@/lib/supabase';
 
 export async function GET(req: NextRequest) {
     // Get session ID from cookie
@@ -15,18 +12,22 @@ export async function GET(req: NextRequest) {
         );
     }
 
-    // Get connection from storage
-    const conn = connectionsMap.get(sessionId);
+    // Get connection from Supabase database (replaces in-memory Map)
+    const { data: session, error: dbError } = await supabase
+        .from('oauth_sessions')
+        .select('*')
+        .eq('session_id', sessionId)
+        .single();
 
-    if (!conn || !conn.connectionId) {
-        console.log('❌ No connection found for session:', sessionId);
+    if (dbError || !session || !session.connection_id) {
+        console.log('❌ No session found in database for:', sessionId);
         return NextResponse.json(
             { error: 'No connection found - please connect your Google Calendar' },
             { status: 401 }
         );
     }
 
-    console.log(`✅ Fetching real calendar events for: ${conn.connectionId}`);
+    console.log(`✅ Fetching real calendar events for: ${session.connection_id}`);
 
     try {
         const proxyUrl = 'https://backend.composio.dev/api/v3/tools/execute/proxy';
@@ -40,7 +41,7 @@ export async function GET(req: NextRequest) {
                 'X-API-Key': process.env.COMPOSIO_API_KEY || '',
             },
             body: JSON.stringify({
-                connected_account_id: conn.connectionId,
+                connected_account_id: session.connection_id,
                 endpoint: '/calendars/primary/events',
                 method: 'GET',
                 parameters: [
@@ -65,7 +66,7 @@ export async function GET(req: NextRequest) {
                 'X-API-Key': process.env.COMPOSIO_API_KEY || '',
             },
             body: JSON.stringify({
-                connected_account_id: conn.connectionId,
+                connected_account_id: session.connection_id,
                 endpoint: '/calendars/primary/events',
                 method: 'GET',
                 parameters: [

@@ -1,84 +1,85 @@
-import { NextRequest, NextResponse } from 'next/server';
-import crypto from 'crypto';
+import { NextResponse } from 'next/server';
+import { serialize } from 'cookie';
+import { supabase } from '@/lib/supabase';
 
-// In-memory connection storage (shared with events API)
-const connectionsMap = (global as any).__connectionsMap || new Map();
-(global as any).__connectionsMap = connectionsMap;
-
-export async function GET(req: NextRequest) {
+export async function GET() {
     try {
-        // Generate a unique user ID for this session
-        const userId = `user_${crypto.randomBytes(8).toString('hex')}`;
+        const authConfigId = process.env.COMPOSIO_AUTH_CONFIG_ID;
+        const apiKey = process.env.COMPOSIO_API_KEY;
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
-        // Build callback URL
-        const callbackUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/oauth/callback`;
+        if (!authConfigId || !apiKey) {
+            return NextResponse.json({ error: 'Missing configuration' }, { status: 500 });
+        }
 
-        // Create auth link session via Composio API
-        const authLinkResponse = await fetch('https://backend.composio.dev/api/v3/connected_accounts/link', {
+        // Generate unique user ID and session ID
+        const userId = `user_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+        const sessionId = Math.random().toString(36).substring(2);
+
+        console.log('🔐 Creating auth link for user:', userId);
+
+        // Create Auth Link via Composio API
+        const response = await fetch('https://backend.composio.dev/api/v3/connected_accounts/link', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-API-Key': process.env.COMPOSIO_API_KEY || '',
+                'X-API-Key': apiKey,
             },
             body: JSON.stringify({
-                auth_config_id: process.env.COMPOSIO_AUTH_CONFIG_ID,
+                auth_config_id: authConfigId,
                 user_id: userId,
-                redirect_url: callbackUrl, // Try snake_case (Composio might expect this)
+                redirect_url: `${baseUrl}`,
             }),
         });
 
-        if (!authLinkResponse.ok) {
-            const errorText = await authLinkResponse.text();
-            console.error('Composio auth link creation failed:', errorText);
-            return NextResponse.json(
-                { error: 'Failed to create auth link', details: errorText },
-                { status: authLinkResponse.status }
-            );
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Composio API error:', errorText);
+            return NextResponse.json({ error: 'Failed to create auth link' }, { status: 500 });
         }
 
-        const authLinkData = await authLinkResponse.json();
-        console.log('✅ Auth link created:', authLinkData);
+        const data = await response.json();
+        console.log('✅ Auth link created:', data);
 
-        // Extract the connection ID that Composio already created
-        const connectionId = authLinkData.connected_account_id || authLinkData.connectionId;
+        const connectionId = data.connected_account_id;
 
-        if (!connectionId) {
-            console.error('❌ No connection ID in response');
-            return NextResponse.json(
-                { error: 'No connection ID returned' },
-                { status: 500 }
-            );
+        // Save session to Supabase database (replaces in-memory storage)
+        const { error: dbError } = await supabase
+            .from('oauth_sessions')
+            .insert({
+                session_id: sessionId,
+                user_id: userId,
+                connection_id: connectionId,
+                expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
+            });
+
+        if (dbError) {
+            console.error('❌ Supabase insert error:', dbError);
+            return NextResponse.json({ error: 'Failed to save session' }, { status: 500 });
         }
 
-        // Generate session ID and store connection immediately
-        const sessionId = Math.random().toString(36).slice(2);
-        connectionsMap.set(sessionId, {
-            created: Date.now(),
-            connectionId: connectionId,
-            userId: userId,
-        });
+        console.log('✅ Stored session in Supabase:', sessionId, 'with connectionId:', connectionId);
 
-        console.log(`✅ Stored session ${sessionId} with connectionId: ${connectionId}`);
-
-        // Redirect to Composio's hosted OAuth page
-        const redirectUrl = authLinkData.redirect_url;
-        console.log('Redirecting to:', redirectUrl);
-
-        // Set session cookie so events API can use it immediately
-        const response = NextResponse.redirect(redirectUrl);
-        response.cookies.set('session_id', sessionId, {
+        // Set session cookie
+        const cookie = serialize('session_id', sessionId, {
             httpOnly: true,
-            path: '/',
-            maxAge: 60 * 60 * 24, // 24 hours
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
+            path: '/',
+            maxAge: 7 * 24 * 60 * 60, // 7 days
         });
 
-        return response;
+        console.log('Redirecting to:', data.redirect_url);
+
+        return new NextResponse(null, {
+            status: 307,
+            headers: {
+                Location: data.redirect_url,
+                'Set-Cookie': cookie,
+            },
+        });
     } catch (error) {
-        console.error('Error creating auth link:', error);
-        return NextResponse.json(
-            { error: 'Internal server error', details: String(error) },
-            { status: 500 }
-        );
+        console.error('OAuth start error:', error);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }
