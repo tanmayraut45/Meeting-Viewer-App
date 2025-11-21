@@ -31,7 +31,7 @@ export async function GET() {
             body: JSON.stringify({
                 auth_config_id: authConfigId,
                 user_id: userId,
-                redirect_url: `${baseUrl}`,
+                redirect_url: `${baseUrl}/api/oauth/callback`,
             }),
         });
 
