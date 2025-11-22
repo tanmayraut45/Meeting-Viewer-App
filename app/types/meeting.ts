@@ -10,6 +10,8 @@ export interface Meeting {
     end: string;   // ISO 8601 format
     attendees: Attendee[];
     description?: string;
+    location?: string;
+    meetingLink?: string;
 }
 
 export interface MeetingCardProps {

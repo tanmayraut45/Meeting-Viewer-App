@@ -117,6 +117,8 @@ export async function GET(req: NextRequest) {
                     email: a.email,
                 })),
                 description: e.description || '',
+                location: e.location || '',
+                meetingLink: e.hangoutLink || '',
             }))
             .slice(0, 5); // Take first 5 (soonest upcoming)
 
@@ -137,6 +139,8 @@ export async function GET(req: NextRequest) {
                     email: a.email,
                 })),
                 description: e.description || '',
+                location: e.location || '',
+                meetingLink: e.hangoutLink || '',
             }));
 
         console.log(`✅ Returning ${upcoming.length} upcoming, ${past.length} past events`);
